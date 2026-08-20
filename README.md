@@ -7,7 +7,7 @@ Project headed by [Daszombes](https://www.youtube.com/@Daszombes) and maintained
 
 ## How to create your own dubs:
 
-Firstly, download the Rain World Voice Framework Template that can be found in the releases tab. To add your own voicelines you need to edit rwf_voicelines.txt, stored in `Modify/`. Below is the syntax for registering a new voiceline:
+Firstly, download the Rain World Voice Framework Template that can be found [here](https://github.com/TheLavaLump/Rain-World-Voice-Framework-Template) tab. To add your own voicelines you need to edit rwf_voicelines.txt, stored in `Modify/`. Below is the syntax for registering a new voiceline:
 
 `[ADD]AUDIOFILENAME|DIALOGUETRIGGER|VOICEACTOR`
 

@@ -1,7 +1,7 @@
 # Rain World Voice Framework
 *(Formerly Rain World Voiced)*
 
-A Rain World Mod that allows the easy creation of fan dubs for in-game dialogue. The mod currently supports creating dubs for Echoes, Iterator and "Tutorial" text on the in-game UI.
+A Rain World Mod that allows the easy creation of fan dubs for in-game dialogue. The mod currently supports creating dubs for Echo, Iterator and "Tutorial" text on the in-game UI.
 
 Project headed by [Daszombes](https://www.youtube.com/@Daszombes) and maintained by [TheLavaLump](https://bsky.app/profile/thelavalump.dev).
 

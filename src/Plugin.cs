@@ -11,23 +11,29 @@ using UnityEngine;
 
 namespace RainWorldVoiced;
 
-[BepInPlugin(MOD_ID, "Rain World Voiced", "1.0.0")]
+[BepInPlugin(MOD_ID, "Rain World Voice Framework", "0.1.0")]
 public class Plugin : BaseUnityPlugin
 {
-    public const string MOD_ID = "daszombes.rainworldvoiced";
+    public const string MOD_ID = "daszombes.rainworldvoiceframework";
 
     public bool IsInit;
-
     public void OnEnable()
     {
         On.RainWorld.OnModsInit += RainWorld_OnModsInit;
-
     }
 
 
     private void RainWorld_OnModsInit(On.RainWorld.orig_OnModsInit orig, RainWorld self)
     {
         orig(self);
+        try
+        {
+            VoicelineHandler.Init();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+        }
         MachineConnector.SetRegisteredOI(MOD_ID, new RWVRemixMenu());
 
         try
@@ -38,10 +44,13 @@ public class Plugin : BaseUnityPlugin
             DialogueHandler.Init();
             Translator.Init();
             VoicelineHandler.Init();
+            Overlay.Apply();
         }
         catch (Exception ex)
         {
             Debug.LogException(ex);
         }
+        Futile.atlasManager.LoadImage("atlases/RWVF/RWVF_Config_Icon");
+        Futile.atlasManager.LoadImage("atlases/RWVF/RWVF_COMINGSOON_Icon");
     }
 }

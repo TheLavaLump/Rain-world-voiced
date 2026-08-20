@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Drawing.Text;
+using UnityEngine;
 
 namespace RainWorldVoiced;
 
@@ -11,7 +12,7 @@ namespace RainWorldVoiced;
 public static class Translator
 {
     private static readonly Dictionary<string, string> ReverseTranslations = new();
-    
+
     public static void Init()
     {
         On.InGameTranslator.Translate += InGameTranslator_Translate;
@@ -33,7 +34,7 @@ public static class Translator
 
         return result;
     }
-    
+
     private static bool InGameTranslator_TryTranslate(On.InGameTranslator.orig_TryTranslate orig, InGameTranslator self, string text, out string res)
     {
         var result = orig(self, text, out res);

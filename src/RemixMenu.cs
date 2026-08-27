@@ -68,7 +68,7 @@ namespace RainWorldVoiced
             OpTab opTab = new OpTab(this, "Config");
             Tabs = new OpTab[1] { opTab };
 
-            UIelement[] elements = new UIelement[] //--I hate everything about this but I don't think there is any easy-ish way to make it look nice
+            UIelement[] elements = new UIelement[] //--I hate everything about this but I don't know any easy-ish way to make it look nice
             {
 
                 // MASTER
@@ -213,7 +213,7 @@ namespace RainWorldVoiced
             FSprite nodeConfig = new FSprite("atlases/RWVF/RWVF_Config_Icon")
             {
                 x = 300f,
-                y = 590f,
+                y = 590,
                 width = 200f,
                 height = 200/4f
             };
@@ -224,7 +224,7 @@ namespace RainWorldVoiced
             FSprite nodeComingSoon = new FSprite("atlases/RWVF/RWVF_COMINGSOON_Icon")
             {
                 x = RWVRemixMenuPosX[2] + 250 / 2f,
-                y = RWVRemixMenuPosY[2] + 120 / 2f +100,
+                y = RWVRemixMenuPosY[2] + 120 / 2f +50,
                 width = 250f,
                 height = 120f
             };

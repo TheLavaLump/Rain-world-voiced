@@ -50,7 +50,7 @@ public static class DialogueHandler
 
     public static bool SoundIsPlaying;
 
-    public static string VoiceActorName;
+    public static string VoiceActorName = "";
 
     public static MenuLabel DatingSimVALabel;
 
@@ -69,6 +69,9 @@ public static class DialogueHandler
 
         //-- Handles tutorial text
         On.HUD.TextPrompt.InitNextMessage += TextPrompt_InitNextMessage;
+
+        On.RoomCamera.ChangeRoom += RoomCamera_ChangeRoom;
+
 
         //-- Handles chat logs, linear broadcasts and dev commentary
         //On.MoreSlugcats.ChatLogDisplay.InitNextMessage += ChatLogDisplay_InitNextMessage;
@@ -100,6 +103,17 @@ public static class DialogueHandler
         //On.MoreSlugcats.CollectionsMenu.Singal += CollectionsMenu_Singal;
     }
 
+    private static void RoomCamera_ChangeRoom(On.RoomCamera.orig_ChangeRoom orig, RoomCamera self, Room newRoom, int cameraPosition)
+    {
+        if (RWVRemixMenu.EnableVAOverlay.Value && VoiceActorName != "")
+        {
+            Debug.Log("[RWVF] Room changed early, resetting voicelines");
+            CurrentVoicline.soundStillPlaying = false;
+            Overlay.VaTextOverlay.alpha = 0;
+            VoiceActorName = "";
+        }
+        orig(self, newRoom, cameraPosition);
+    }
     //Collection menu and dating sim stuff, commented code is unfinished and does not entirely work properly to be implemented at a later date
     /*
     private static void MenuSoundObject_ctor(On.MenuMicrophone.MenuSoundObject.orig_ctor orig, MenuMicrophone.MenuSoundObject self, MenuMicrophone mic, SoundLoader.SoundData soundData, bool loop, float initPan, float initVol, float initPitch, bool startAtRandomTime)
@@ -203,6 +217,7 @@ public static class DialogueHandler
         {
             Debug.Log("[RWVF] Sound effect returned null");
             Debug.Log(Translator.Untranslate(self.CurrentMessage.text.Replace("\r\n", "<LINE>")));
+            VoiceActorName = "";
             return;
         }
         var played = false;
@@ -223,7 +238,7 @@ public static class DialogueHandler
                         try
                         {
                             CurrentVoicline = room.PlaySound(sound, oracle.bodyChunks[0]);
-                            SoundVolume = RWVRemixMenu.IteratorVolume.Value*RWVRemixMenu.VoiceVolume.Value*0.5f;
+                            SoundVolume = RWVRemixMenu.IteratorVolume.Value * RWVRemixMenu.VoiceVolume.Value * 0.5f;
                         }
                         catch (Exception e)
                         {
@@ -280,7 +295,7 @@ public static class DialogueHandler
 
         return sound;
     }
-    
+
     private static string GetVoiceActor(string text)
     {
         var originalText = Translator.Untranslate(text);
@@ -311,13 +326,13 @@ public static class DialogueHandler
         //-- If the sound is still playing do not initiate the next line to prevent overlapping shenanigans
         if (self.CurrentMessage != null && CurrentVoicline != null && CurrentVoicline.soundStillPlaying)
         {
-            if(self.showText == self.CurrentMessage.text)
+            if (self.showText == self.CurrentMessage.text)
             {
                 self.lingerCounter = (self.CurrentMessage.linger - 1);
             }
             try
             {
-                if(!RWVRemixMenu.EnableVAOverlay.Value) { return; }
+                if (!RWVRemixMenu.EnableVAOverlay.Value) { return; }
 
                 Overlay.VaTextOverlay.alpha += 5f * Time.deltaTime;
                 Overlay.VaTextOverlay.text = VoiceActorName;
@@ -342,7 +357,7 @@ public static class DialogueHandler
             {
                 TimeSinceLastVoiceline += Time.deltaTime;
                 return;
-            }           
+            }
 
             Overlay.VaTextOverlay.alpha -= 5f * Time.deltaTime;
             if (Overlay.VaTextOverlay.alpha < 0)
